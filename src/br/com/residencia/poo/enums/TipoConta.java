@@ -2,9 +2,9 @@ package br.com.residencia.poo.enums;
 
 public enum TipoConta {
 
-	CONTA_CORRENTE("Conta corrente", 1),
-	CONTA_POUPANCA("Conta poupança", 2);
-
+	CONTA_CORRENTE("Corrente", 1),
+	CONTA_POUPANCA("Poupanca", 2);
+	
 	private final String tipoConta;
 	private final Integer idTipoConta;
 

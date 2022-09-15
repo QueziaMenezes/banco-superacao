@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import br.com.residencia.poo.contas.Conta;
-import br.com.residencia.poo.enums.TipoPessoa;
 import br.com.residencia.poo.menus.Menu;
-import br.com.residencia.poo.menus.MenuRelatorio;
 import br.com.residencia.poo.pessoas.Funcionario;
 
 public class Principal {

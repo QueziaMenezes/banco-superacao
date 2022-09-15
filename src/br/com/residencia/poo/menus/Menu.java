@@ -40,7 +40,7 @@ public class Menu {
 			case 2:
 				System.out.print("Digite o valor que deseja depositar: ");
 				inputValor = Double.parseDouble(Principal.sc.next());
-				conta.sacar(inputValor);
+				conta.depositar(inputValor);
 				LeituraEscrita.comprovanteDeposito(conta, inputValor);
 				break;
 			case 3:

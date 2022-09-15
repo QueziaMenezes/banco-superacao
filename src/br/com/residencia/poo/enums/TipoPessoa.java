@@ -5,7 +5,7 @@ public enum TipoPessoa {
 	GERENTE("Gerente", 1), 
 	DIRETOR("Diretor", 2),
 	PRESIDENTE("Presidente", 3),
-	OPERADOR_CAIXA("Operador de caixa", 4);
+	OPERADOR_CAIXA("OperadorCaixa", 4);
 	
 	private final Integer idTipoPessoa;
 	private final String tipoPessoa;

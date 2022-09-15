@@ -4,6 +4,12 @@ import br.com.residencia.poo.principal.*;
 
 public class ContaPoupanca extends Conta {
 	
+	@Override
+	public String toString() {
+		return "ContaPoupanca [taxaRendimento=" + taxaRendimento + ", tipoConta=" + tipoConta + ", agencia=" + agencia
+				+ ", numero=" + numero + ", saldo=" + saldo + ", cpf=" + cpf + "]";
+	}
+
 	protected double taxaRendimento = 0.01575;
 	
 	public ContaPoupanca() {
