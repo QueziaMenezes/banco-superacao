@@ -18,6 +18,7 @@ import br.com.residencia.poo.pessoas.Diretor;
 import br.com.residencia.poo.pessoas.Funcionario;
 import br.com.residencia.poo.pessoas.Gerente;
 import br.com.residencia.poo.pessoas.OperadorCaixa;
+import br.com.residencia.poo.tributos.Taxa;
 import br.com.residencia.poo.tributos.Tributo;
 
 public class LeituraEscrita {
@@ -130,7 +131,7 @@ public class LeituraEscrita {
 
 	}
 
-	public static void comprovanteTransferencia(Conta conta, double valorTransferencia, Conta destino)
+	public static void comprovanteTransferencia(Conta conta, Funcionario funcionario, double valorTransferencia, Conta destino, Funcionario funcionarioDestino)
 			throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
 				+ "_transacoes";
@@ -138,6 +139,61 @@ public class LeituraEscrita {
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 
 		String linha = "*************** TRANSFERÊNCIA REALIZADA ***************";
+		buffWrite.append(linha + "\n\n");
+
+		linha = "*********** DADOS DO REMETENTE **********";
+		buffWrite.append(linha + "\n");
+		
+		linha = "Titular: " + funcionario.getNome();
+		buffWrite.append(linha + "\n");
+
+		linha = "CPF: " + conta.getCpf();
+		buffWrite.append(linha + "\n");
+
+		linha = "Agência : " + conta.getAgencia();
+		buffWrite.append(linha + "\n");
+
+		linha = "Conta: " + conta.getNumero();
+		buffWrite.append(linha + "\n");
+
+		linha = "********** DADOS DO DESTINATÁRIO ***********";
+		buffWrite.append(linha + "\n");
+
+		linha = "Titular: " + funcionarioDestino.getNome();
+		buffWrite.append(linha + "\n");
+		
+		linha = "CPF: " + destino.getCpf();
+		buffWrite.append(linha + "\n");
+
+		linha = "Agência: " + destino.getAgencia();
+		buffWrite.append(linha + "\n");
+
+		linha = "Conta: " + destino.getNumero();
+		buffWrite.append(linha + "\n");
+
+		linha = "***********************************************";
+		buffWrite.append(linha + "\n");
+
+		linha = "Valor: R$ " + valorTransferencia;
+		buffWrite.append(linha + "\n");
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		linha = "Operação realizada em: " + simpleDateFormat.format(date);
+		buffWrite.append(linha + "\n");
+
+		linha = "*************** FIM DA TRANSFERÊNCIA ***************";
+		buffWrite.append(linha + "\n\n");
+
+		buffWrite.close();
+
+		// REGISTRAR DADOS NO COMPROVANTE DO DESTINATARIO
+		/*nomeArquivo = destino.getCpf() + "_" + destino.getAgencia() + "_" + destino.getNumero()
+				+ "_transacoes";
+
+		buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+
+		linha = "*************** TRANSFERÊNCIA RECEBIDA ***************";
 		buffWrite.append(linha + "\n\n");
 
 		linha = "*********** DADOS DO REMETENTE **********";
@@ -170,62 +226,13 @@ public class LeituraEscrita {
 		linha = "Valor: R$ " + valorTransferencia;
 		buffWrite.append(linha + "\n");
 
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		Date date = new Date();
+		simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		date = new Date();
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
 		linha = "*************** FIM DA TRANSFERÊNCIA ***************";
-		buffWrite.append(linha + "\n\n");
-
-		buffWrite.close();
-
-//		// REGISTRAR DADOS NO COMPROVANTE DO DESTINATARIO
-//		nomeArquivo = destino.getCpf() + "_" + destino.getNumeroAgencia() + "_" + destino.getNumeroConta()
-//				+ "_transacoes";
-//
-//		buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
-//
-//		linha = "*************** TRANSFERÊNCIA RECEBIDA ***************";
-//		buffWrite.append(linha + "\n\n");
-//
-//		linha = "*********** DADOS DO REMETENTE **********";
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "CPF: " + conta.getCpf();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "Agência : " + conta.getNumeroAgencia();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "Conta: " + conta.getNumeroConta();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "********** DADOS DO DESTINATÁRIO ***********";
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "CPF: " + destino.getCpf();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "Agência: " + destino.getNumeroAgencia();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "Conta: " + destino.getNumeroConta();
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "***********************************************";
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "Valor: R$ " + valorTransferencia;
-//		buffWrite.append(linha + "\n");
-//
-//		simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-//		date = new Date();
-//		linha = "Operação realizada em: " + simpleDateFormat.format(date);
-//		buffWrite.append(linha + "\n");
-//
-//		linha = "*************** FIM DA TRANSFERÊNCIA ***************";
-//		buffWrite.append(linha + "\n");
+		buffWrite.append(linha + "\n");*/
 
 		buffWrite.close();
 	}
@@ -249,6 +256,18 @@ public class LeituraEscrita {
 		buffWrite.append(linha + "\n\n");
 
 		linha = "Taxa para deposito = R$ " + df.format(Tributo.DEPOSITO);
+		buffWrite.append(linha + "\n");
+		
+		linha = "Total de saques transferidos = " + ((ContaCorrente) conta).getTotalTransferencias();
+		buffWrite.append(linha + "\n\n");
+
+		linha = "Taxa para transferencia = R$ " + df.format(Tributo.TRANSFERENCIA);
+		buffWrite.append(linha + "\n");
+		
+		linha = "Total de saques seguro de vida = " + ((ContaCorrente) conta).getTotalSeguroDeVida();
+		buffWrite.append(linha + "\n\n");
+
+		linha = "Taxa para o seguro de vida = R$ " + df.format(Taxa.SEGURODEVIDA);
 		buffWrite.append(linha + "\n");
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import br.com.residencia.poo.contas.Conta;
+import br.com.residencia.poo.enums.TipoPessoa;
 import br.com.residencia.poo.menus.Menu;
 import br.com.residencia.poo.pessoas.Funcionario;
 
@@ -26,7 +27,9 @@ public class Principal {
 	public void menuInterativo() {
 		try {
 			imprimeLinhaHorizontal();
+			System.out.println("Olá, seja bem vindo(a) ao Banco Super Ação!");
 			imprimeLinhaHorizontal();
+			
 			System.out.print("Digite seu CPF: ");
 			inputCpf = sc.next();
 			System.out.print("Digite sua senha: ");
@@ -35,6 +38,7 @@ public class Principal {
 			Conta conta = (Conta) Conta.mapaContas.get(inputCpf);
 
 			while (funcionario == null || !(funcionario.getSenha().equals(inputSenha))) {
+				imprimeLinhaHorizontal();
 				System.out.println("CPF e/ou Senha incorreto(s)\n\n");
 				System.out.print("Digite seu CPF: ");
 				inputCpf = sc.next();
@@ -44,7 +48,19 @@ public class Principal {
 				conta = (Conta) Conta.mapaContas.get(inputCpf);
 			}
 			
-			subMenu(funcionario, conta);
+			imprimeLinhaHorizontal();
+			System.out.println("Olá, " + funcionario.getNome() + "!\n");
+			
+			if (funcionario.getTipoPessoa().equalsIgnoreCase(TipoPessoa.GERENTE.getTipoPessoa())) {
+				menu(funcionario, conta);
+			} else if (funcionario.getTipoPessoa().equalsIgnoreCase(TipoPessoa.DIRETOR.getTipoPessoa())) {
+				menu(funcionario, conta);
+			} else if (funcionario.getTipoPessoa().equalsIgnoreCase(TipoPessoa.PRESIDENTE.getTipoPessoa())) {
+				menu(funcionario, conta);
+			} else {
+				menu(funcionario, conta);
+			}
+			
 			imprimeLinhaHorizontal();
 
 		} catch (Exception e) {
@@ -55,26 +71,19 @@ public class Principal {
 		sc.close();
 	}
 
-	// SUBMENU
-	public void subMenu(Funcionario funcionario, Conta conta) throws IOException {
+	// Menu
+	public void menu(Funcionario funcionario, Conta conta) throws IOException {
 		try {
-			imprimeLinhaHorizontal();
-			System.out.println("Bem-vindo(a) ao seu Banco, " + funcionario.getNome() + "!\n");
-			imprimeLinhaHorizontal();
-			System.out.println("Digite o número correspondente a operação desejada:");
 			Menu.menuPrincipal(funcionario, conta);
-
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		} finally {
-			subMenu(funcionario, conta);
+			menu(funcionario, conta);
 		}
-	
 		Menu.menuPrincipal(funcionario, conta);
 	}
-
-	public void imprimeLinhaHorizontal() {
-		System.out.println("--------------------------------------------------");
-	}
 	
+	public void imprimeLinhaHorizontal() {
+		System.out.println("\n==================================================");
+	}
 }

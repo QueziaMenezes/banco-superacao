@@ -10,7 +10,7 @@ public abstract class Conta {
 	protected Integer numero;
 	protected Double saldo;
 	protected String cpf;
-
+	
 	public static Map<String, Conta> mapaContas = new HashMap<>();
 	
 	public Conta() {
@@ -72,6 +72,12 @@ public void setTitular(String titular) {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	
+	public void imprimeLinhaHorizontal() {
+		System.out.println("\n==================================================");
+	}
+	
+	public abstract String getTipo();
 	
 	public abstract void sacar(double valor);
 

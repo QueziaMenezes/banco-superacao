@@ -20,11 +20,11 @@ public class MenuRelatorio {
 	Menu menuPrincipal = new Menu();
 
 	public static void menuRelatorio(Integer idFuncionario, Funcionario funcionario, Conta conta) throws IOException {
-//		if (conta.getTipoConta().equalsIgnoreCase(ContaEnum.CORRENTE.getTipoConta())) {
-//			System.out.println("[1]\tTributação conta corrente");
-//		} else {
-//			System.out.println("[1]\tSimulação de rendimento");
-//		}
+		if (conta.getTipoConta().equalsIgnoreCase(TipoConta.CONTA_CORRENTE.getTipoConta())) {
+			System.out.println("[1]\tTributação conta corrente");
+		} else {
+			System.out.println("[1]\tSimulação de rendimento");
+		}
 		
 		if (idFuncionario >= 1) {
 			System.out.println("[2]\tNúmero de contas da sua agencia");
@@ -55,7 +55,7 @@ public class MenuRelatorio {
 				System.out.println("Digite o número de dias para a simulação: ");
 				inputDias = Principal.sc.nextInt();
 				((ContaPoupanca) conta).previsaoDeRendimento(inputValor, inputDias);
-//				LeituraEscrita.relatorioRendimentoPoupanca(conta, inputValor, inputDias);
+				// LeituraEscrita.relatorioRendimentoPoupanca(conta, inputValor, inputDias);
 			}
 			selecaoRelatorio(conta, funcionario);
 			break;
