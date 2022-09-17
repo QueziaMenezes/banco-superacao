@@ -1,14 +1,14 @@
 package br.com.residencia.poo.contas;
 
-import br.com.residencia.poo.tributos.Taxa;
+import br.com.residencia.poo.tributos.SeguroDeVida;
 import br.com.residencia.poo.tributos.Tributo;
 
-public class ContaCorrente extends Conta implements Tributo, Taxa  {
-	private Integer totalSaques = 0;
-	private Integer totalDepositos = 0;
-	private Integer totalTransferencias = 0;
-	private Integer totalSeguroDeVida = 0;
-	private Double totalTributado = 0.0;
+public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
+	protected Integer totalSaques = 0;
+	protected Integer totalDepositos = 0;
+	protected Integer totalTransferencias = 0;
+	protected Integer totalSeguroDeVida = 0;
+	protected Double totalTributado = 0.0;
 	protected double apolice;
 	
 	
@@ -63,10 +63,9 @@ public class ContaCorrente extends Conta implements Tributo, Taxa  {
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor sacado: R$%.2f", valor, "\n");
 			System.out.printf("\nTaxa para saque: R$%.2f", Tributo.SAQUE, "\n");
-			System.out.printf("\nSaldo atual: R$%.2f", this.saldo, "\n");
 			++totalDepositos;
 		} else {
-			System.out.println("Saldo insuficiente.");
+			System.out.println("Saldo insuficiente!");
 		}
 	}
 	
@@ -80,10 +79,9 @@ public class ContaCorrente extends Conta implements Tributo, Taxa  {
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor depositado: R$%.2f", valor, "\n");
 			System.out.printf("\nTaxa para depositar: R$%.2f", Tributo.DEPOSITO, "\n");
-			System.out.printf("\nSaldo atual: R$%.2f", this.saldo, "\n");
 			++totalSaques;
 		} else {
-			System.out.println("Valor minimo.");
+			System.out.println("Valor minimo!");
 		}
 	}
 	
@@ -99,7 +97,6 @@ public class ContaCorrente extends Conta implements Tributo, Taxa  {
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor transferido: R$%.2f", valor, "\n");
 			System.out.printf("\nTaxa para transferência: R$%.2f", Tributo.TRANSFERENCIA, "\n");
-			System.out.printf("\nSaldo atual: R$%.2f", this.saldo, "\n");
 			++totalTransferencias;
 		} else {
 			System.out.println("\nValor insuficiente.");
@@ -127,21 +124,21 @@ public class ContaCorrente extends Conta implements Tributo, Taxa  {
 	}
 	
 	public void seguroDeVida(double valor) {
-		if (this.saldo >= valor * Taxa.SEGURODEVIDA) {
+		if (this.saldo >= valor * SeguroDeVida.SEGURODEVIDA) {
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
-			this.apolice = valor * Taxa.SEGURODEVIDA;
-			this.totalTributado += Taxa.SEGURODEVIDA;
+			this.apolice = valor * SeguroDeVida.SEGURODEVIDA;
+			this.totalTributado += SeguroDeVida.SEGURODEVIDA;
 			this.saldo = this.saldo - this.apolice;
 			++totalSeguroDeVida;
 		} else {
-			System.out.println("erro");
+			System.out.println("\nValor insuficiente!");
 		}
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Conta Corrente\tNúmero da Agência = " + this.agencia + "\tNúmero da Conta = "
-				+ this.numero + "\tSaldo = " + this.saldo + "\tCPF = " + this.cpf + "\n";
+		return "Conta Corrente\nNúmero da Agência = " + this.agencia + "\nNúmero da Conta = "
+				+ this.numero + "\nSaldo = " + this.saldo + "\nCPF = " + this.cpf + "\n";
 	}
 }	

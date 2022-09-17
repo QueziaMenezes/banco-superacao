@@ -76,6 +76,7 @@ public void setTitular(String titular) {
 	public void imprimeLinhaHorizontal() {
 		System.out.println("\n==================================================");
 	}
+
 	
 	public abstract String getTipo();
 	
@@ -86,4 +87,10 @@ public void setTitular(String titular) {
 	public abstract void transferir(Conta destino, double valor);
 	
 	public abstract void verificarSaldo();
+
+	@Override
+	public String toString() {
+		return "Conta [tipoConta=" + tipoConta + ", agencia=" + agencia + ", numero=" + numero + ", saldo=" + saldo
+				+ ", cpf=" + cpf + "]";
+	}
 }

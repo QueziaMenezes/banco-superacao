@@ -1,0 +1,49 @@
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 100.0
+Operação realizada em: 15/09/2022 20:01:19
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 87.9
+Operação realizada em: 15/09/2022 20:01:56
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 87.9
+Operação realizada em: 15/09/2022 20:02:49
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 87.9
+Operação realizada em: 15/09/2022 20:06:35
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 100.0
+Operação realizada em: 16/09/2022 14:42:35
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 1000.1
+Operação realizada em: 16/09/2022 14:43:22
+*************** FIM ***************
+*************** SALDO ***************
+Tipo: Corrente
+Agência: 1651
+Conta: 154890
+Saldo: R$ 9.799999999999997
+Operação realizada em: 16/09/2022 14:58:41
+*************** FIM ***************

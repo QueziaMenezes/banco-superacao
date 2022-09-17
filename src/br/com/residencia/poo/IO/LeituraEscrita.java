@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TreeMap;
 
 import br.com.residencia.poo.contas.Conta;
 import br.com.residencia.poo.contas.ContaCorrente;
@@ -18,7 +19,8 @@ import br.com.residencia.poo.pessoas.Diretor;
 import br.com.residencia.poo.pessoas.Funcionario;
 import br.com.residencia.poo.pessoas.Gerente;
 import br.com.residencia.poo.pessoas.OperadorCaixa;
-import br.com.residencia.poo.tributos.Taxa;
+import br.com.residencia.poo.principal.Principal;
+import br.com.residencia.poo.tributos.SeguroDeVida;
 import br.com.residencia.poo.tributos.Tributo;
 
 public class LeituraEscrita {
@@ -71,7 +73,7 @@ public class LeituraEscrita {
 				+ "_transacoes";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 
-		String linha = "*************** SAQUE ***************";
+		String linha = "############### SAQUE ###############";
 		buffWrite.append(linha + "\n");
 
 		linha = "CPF: " + conta.getCpf();
@@ -91,7 +93,7 @@ public class LeituraEscrita {
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
-		linha = "*************** FIM DO SAQUE ***************";
+		linha = "############### FIM DO SAQUE ###############";
 		buffWrite.append(linha + "\n\n");
 
 		buffWrite.close();
@@ -104,7 +106,7 @@ public class LeituraEscrita {
 
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 
-		String linha = "*************** DEPÓSITO ***************";
+		String linha = "############### DEPÓSITO ###############";
 		buffWrite.append(linha + "\n");
 
 		linha = "CPF: " + conta.getCpf();
@@ -124,7 +126,7 @@ public class LeituraEscrita {
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
-		linha = "*************** FIM DO DEPÓSITO ***************";
+		linha = "############### FIM DO DEPÓSITO ###############";
 		buffWrite.append(linha + "\n\n");
 
 		buffWrite.close();
@@ -138,10 +140,10 @@ public class LeituraEscrita {
 
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 
-		String linha = "*************** TRANSFERÊNCIA REALIZADA ***************";
+		String linha = "############### TRANSFERÊNCIA REALIZADA ###############";
 		buffWrite.append(linha + "\n\n");
 
-		linha = "*********** DADOS DO REMETENTE **********";
+		linha = "############### DADOS DO REMETENTE ###############";
 		buffWrite.append(linha + "\n");
 		
 		linha = "Titular: " + funcionario.getNome();
@@ -156,7 +158,7 @@ public class LeituraEscrita {
 		linha = "Conta: " + conta.getNumero();
 		buffWrite.append(linha + "\n");
 
-		linha = "********** DADOS DO DESTINATÁRIO ***********";
+		linha = "############### DADOS DO DESTINATÁRIO ###############";
 		buffWrite.append(linha + "\n");
 
 		linha = "Titular: " + funcionarioDestino.getNome();
@@ -171,7 +173,7 @@ public class LeituraEscrita {
 		linha = "Conta: " + destino.getNumero();
 		buffWrite.append(linha + "\n");
 
-		linha = "***********************************************";
+		linha = "###############################################";
 		buffWrite.append(linha + "\n");
 
 		linha = "Valor: R$ " + valorTransferencia;
@@ -182,58 +184,67 @@ public class LeituraEscrita {
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
-		linha = "*************** FIM DA TRANSFERÊNCIA ***************";
+		linha = "############### FIM DA TRANSFERÊNCIA ###############";
 		buffWrite.append(linha + "\n\n");
 
 		buffWrite.close();
 
-		// REGISTRAR DADOS NO COMPROVANTE DO DESTINATARIO
-		/*nomeArquivo = destino.getCpf() + "_" + destino.getAgencia() + "_" + destino.getNumero()
-				+ "_transacoes";
-
-		buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
-
-		linha = "*************** TRANSFERÊNCIA RECEBIDA ***************";
-		buffWrite.append(linha + "\n\n");
-
-		linha = "*********** DADOS DO REMETENTE **********";
-		buffWrite.append(linha + "\n");
-
-		linha = "CPF: " + conta.getCpf();
-		buffWrite.append(linha + "\n");
-
-		linha = "Agência : " + conta.getAgencia();
-		buffWrite.append(linha + "\n");
-
-		linha = "Conta: " + conta.getNumero();
-		buffWrite.append(linha + "\n");
-
-		linha = "********** DADOS DO DESTINATÁRIO ***********";
-		buffWrite.append(linha + "\n");
-
-		linha = "CPF: " + destino.getCpf();
-		buffWrite.append(linha + "\n");
-
-		linha = "Agência: " + destino.getAgencia();
-		buffWrite.append(linha + "\n");
-
-		linha = "Conta: " + destino.getNumero();
-		buffWrite.append(linha + "\n");
-
-		linha = "***********************************************";
-		buffWrite.append(linha + "\n");
-
-		linha = "Valor: R$ " + valorTransferencia;
-		buffWrite.append(linha + "\n");
-
-		simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		date = new Date();
-		linha = "Operação realizada em: " + simpleDateFormat.format(date);
-		buffWrite.append(linha + "\n");
-
-		linha = "*************** FIM DA TRANSFERÊNCIA ***************";
-		buffWrite.append(linha + "\n");*/
-
+		System.out.print("\nVoce quer enviar o comprovante para destinatario(1 - Sim/2 - Não): ");
+		int opcao = Principal.sc.nextInt();
+		if(opcao == 1) {
+			nomeArquivo = destino.getCpf() + "_" + destino.getAgencia() + "_" + destino.getNumero()
+					+ "_transacoes";
+	
+			buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+	
+			linha = "###############  TRANSFERÊNCIA RECEBIDA ############### ";
+			buffWrite.append(linha + "\n\n");
+	
+			linha = "###############  DADOS DO REMETENTE ############### ";
+			buffWrite.append(linha + "\n");
+			
+			linha = "Titular: " + funcionario.getNome();
+			buffWrite.append(linha + "\n");
+	
+			linha = "CPF: " + conta.getCpf();
+			buffWrite.append(linha + "\n");
+	
+			linha = "Agência : " + conta.getAgencia();
+			buffWrite.append(linha + "\n");
+	
+			linha = "Conta: " + conta.getNumero();
+			buffWrite.append(linha + "\n");
+	
+			linha = "############### DADOS DO DESTINATÁRIO ###############";
+			buffWrite.append(linha + "\n");
+	
+			linha = "Titular: " + funcionarioDestino.getNome();
+			buffWrite.append(linha + "\n");
+			
+			linha = "CPF: " + destino.getCpf();
+			buffWrite.append(linha + "\n");
+	
+			linha = "Agência: " + destino.getAgencia();
+			buffWrite.append(linha + "\n");
+	
+			linha = "Conta: " + destino.getNumero();
+			buffWrite.append(linha + "\n");
+					
+			linha = "###############################################";
+			buffWrite.append(linha + "\n");
+	
+			linha = "Valor: R$ " + valorTransferencia;
+			buffWrite.append(linha + "\n");
+	
+			simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			date = new Date();
+			linha = "Operação realizada em: " + simpleDateFormat.format(date);
+			buffWrite.append(linha + "\n");
+	
+			linha = "############### FIM DA TRANSFERÊNCIA ###############";
+			buffWrite.append(linha + "\n");
+		}
+		
 		buffWrite.close();
 	}
 
@@ -242,9 +253,10 @@ public class LeituraEscrita {
 				+ "_tributacoes";
 
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
-
-		String linha = "*************** TOTAL DE TRIBUTAÇÕES ***************";
+					   
+		String linha = "############### RELATORIO TRIBUTACAO CONTA CORRENTE ###############";
 		buffWrite.append(linha + "\n\n");
+		
 		DecimalFormat df = new DecimalFormat("0.00");
 		linha = "Total gasto com transações = R$ " + df.format(((ContaCorrente) conta).getTotalTributado());
 		buffWrite.append(linha + "\n");
@@ -267,7 +279,7 @@ public class LeituraEscrita {
 		linha = "Total de saques seguro de vida = " + ((ContaCorrente) conta).getTotalSeguroDeVida();
 		buffWrite.append(linha + "\n\n");
 
-		linha = "Taxa para o seguro de vida = R$ " + df.format(Taxa.SEGURODEVIDA);
+		linha = "Taxa para o seguro de vida = R$ " + df.format(SeguroDeVida.SEGURODEVIDA);
 		buffWrite.append(linha + "\n");
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -275,7 +287,7 @@ public class LeituraEscrita {
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
-		linha = "****************************************************";
+		linha = "############################## FIM ################################";
 		buffWrite.append(linha + "\n\n");
 
 		buffWrite.close();
@@ -286,8 +298,8 @@ public class LeituraEscrita {
 				+ "_comprovanteSaldo";
 
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
-
-		String linha = "*************** SALDO ***************";
+					   
+		String linha = "############### COMPROVANTE SALDO ###############";
 		buffWrite.append(linha + "\n");
 
 		linha = "Tipo: " + conta.getTipoConta();
@@ -307,10 +319,94 @@ public class LeituraEscrita {
 		linha = "Operação realizada em: " + simpleDateFormat.format(date);
 		buffWrite.append(linha + "\n");
 
-		linha = "*************** FIM ***************";
+		linha = "##################### FIM #######################";
 		buffWrite.append(linha + "\n");
 
 		buffWrite.close();
 	}
-	
+
+	public static void relatorioRendimentoPoupanca(Conta conta, double inputValor, int inputDias, double valorRendimento) throws IOException {
+		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+		+ "_rendimentoPoupanca";
+		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+					   
+		String linha = "############### RELATORIO RENDIMENTO POUPANCA ###############";
+		buffWrite.append(linha + "\n");
+		
+		linha = "CPF: " + conta.getCpf();
+		buffWrite.append(linha + "\n");
+		
+		linha = "Valor gasto: R$ " + inputValor;
+		buffWrite.append(linha + "\n");
+		
+		linha = "Dias: " + inputDias;
+		buffWrite.append(linha + "\n");
+		
+		linha = "Previsao de rendimento: R$ " + valorRendimento;
+		buffWrite.append(linha + "\n");
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		linha = "Operação realizada em: " + simpleDateFormat.format(date);
+		buffWrite.append(linha + "\n");
+		
+		linha = "############################ FIM ############################";
+		buffWrite.append(linha + "\n\n");
+		
+		buffWrite.close();
+	}
+
+	public static void relatorioContasPorAgencia(Conta conta) throws IOException {
+		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+		+ "_relatorioContasPorAgencia";
+		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+					   
+		String linha = "############### RELATORIO CONTAS POR AGENCIA ###############";
+		buffWrite.append(linha + "\n");
+		
+		int total = 0;
+		for (String cpf : Conta.mapaContas.keySet()) {
+			if (Conta.mapaContas.get(cpf).getAgencia().equals(conta.getAgencia())) {
+				buffWrite.append(Conta.mapaContas.get(cpf) + "\n");
+				total++;
+			}
+		}
+		
+		linha = "Total de contas: " + total;
+		buffWrite.append(linha + "\n");
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		linha = "Operação realizada em: " + simpleDateFormat.format(date);
+		buffWrite.append(linha + "\n");
+		
+		linha = "############################ FIM ############################";
+		buffWrite.append(linha + "\n\n");
+		
+		buffWrite.close();
+		
+	}
+
+	public static void relatorioTotalClientes(Conta conta, TreeMap<String, Funcionario> ordenaFuncionarios) throws IOException {
+		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+		+ "_relatorioTotalClientes";
+		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+					   
+		String linha = "############### RELATORIO TOTAL CLIENTES ###############";
+		buffWrite.append(linha + "\n");
+		
+		for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
+			buffWrite.append(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes() + "\n");
+		}
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		linha = "Operação realizada em: " + simpleDateFormat.format(date);
+		buffWrite.append(linha + "\n");
+		
+		linha = "############################ FIM ############################";
+		buffWrite.append(linha + "\n\n");
+		
+		buffWrite.close();
+	}
 }

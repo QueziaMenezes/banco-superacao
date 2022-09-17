@@ -1,0 +1,164 @@
+*************** DEPÓSITO ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 1222.0
+Operação realizada em: 15/09/2022 20:01:28
+*************** FIM DO DEPÓSITO ***************
+
+*************** DEPÓSITO ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 12.0
+Operação realizada em: 15/09/2022 20:01:37
+*************** FIM DO DEPÓSITO ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+CPF: 2
+Agência: 2149
+Conta: 253253
+***********************************************
+Valor: R$ 12.0
+Operação realizada em: 15/09/2022 20:02:31
+*************** FIM DA TRANSFERÊNCIA ***************
+
+*************** DEPÓSITO ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 100.0
+Operação realizada em: 15/09/2022 20:03:41
+*************** FIM DO DEPÓSITO ***************
+
+*************** DEPÓSITO ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 100.0
+Operação realizada em: 15/09/2022 20:04:26
+*************** FIM DO DEPÓSITO ***************
+
+*************** SAQUE ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 1222.0
+Operação realizada em: 15/09/2022 20:12:09
+*************** FIM DO SAQUE ***************
+
+*************** SAQUE ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 22.0
+Operação realizada em: 16/09/2022 14:33:09
+*************** FIM DO SAQUE ***************
+
+*************** SAQUE ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 800.0
+Operação realizada em: 16/09/2022 14:42:21
+*************** FIM DO SAQUE ***************
+
+*************** DEPÓSITO ***************
+CPF: 123
+Agência: 1651
+Conta: 154890
+Valor: R$ 900.0
+Operação realizada em: 16/09/2022 14:43:18
+*************** FIM DO DEPÓSITO ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+Titular: Ian
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+Titular: Déby Souza
+CPF: 416
+Agência: 1651
+Conta: 123455
+***********************************************
+Valor: R$ 900.0
+Operação realizada em: 16/09/2022 14:52:52
+*************** FIM DA TRANSFERÊNCIA ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+Titular: Ian
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+Titular: Déby Souza
+CPF: 416
+Agência: 1651
+Conta: 123455
+***********************************************
+Valor: R$ 900000.0
+Operação realizada em: 16/09/2022 14:53:37
+*************** FIM DA TRANSFERÊNCIA ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+Titular: Ian
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+Titular: Déby Souza
+CPF: 416
+Agência: 1651
+Conta: 123455
+***********************************************
+Valor: R$ 900.0
+Operação realizada em: 16/09/2022 14:57:05
+*************** FIM DA TRANSFERÊNCIA ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+Titular: Ian
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+Titular: Ian
+CPF: 123
+Agência: 1651
+Conta: 154890
+***********************************************
+Valor: R$ 123.0
+Operação realizada em: 16/09/2022 14:57:30
+*************** FIM DA TRANSFERÊNCIA ***************
+
+*************** TRANSFERÊNCIA REALIZADA ***************
+
+*********** DADOS DO REMETENTE **********
+Titular: Ian
+CPF: 123
+Agência : 1651
+Conta: 154890
+********** DADOS DO DESTINATÁRIO ***********
+Titular: Déby Souza
+CPF: 416
+Agência: 1651
+Conta: 123455
+***********************************************
+Valor: R$ 90.0
+Operação realizada em: 16/09/2022 14:57:36
+*************** FIM DA TRANSFERÊNCIA ***************
+
