@@ -11,6 +11,7 @@ import br.com.residencia.poo.contas.ContaCorrente;
 import br.com.residencia.poo.pessoas.Funcionario;
 import br.com.residencia.poo.principal.Principal;
 import br.com.residencia.poo.tributos.Tributo;
+import br.com.residencia.poo.usuarios.Cliente;
 
 public class MenuRelatorio {
 
@@ -35,18 +36,26 @@ public class MenuRelatorio {
 			System.out.println("2 - Número de contas da sua agencia.");
 			if (idFuncionario >= 2) {
 				System.out.println("3 - Informações de Nome, CPF e Agência de todos os clientes.");
+				if (idFuncionario >= 2) {
+					System.out.println("4 - Informações do valor total do capital armazenado no banco.");
+					
+				}
 			}
 		}
 		
-		System.out.println("4 - Voltar");
+		System.out.println("0 - Voltar");
 		imprimeLinhaHorizontal();
 
 		System.out.print("Digite a opção desejada: ");
 		int operacao = Principal.sc.nextInt();
 
 		switch (operacao) {
+		case 0:
+			limpar();
+			Menu.menuPrincipal(funcionario, conta);
+			break;
 		case 1:
-			if (conta.getTipo() == "Conta Corrente") {
+			if (conta.getTipoConta().equalsIgnoreCase(TipoConta.CONTA_CORRENTE.getTipoConta())) {
 				imprimeLinhaHorizontal();
 				System.out.println("\nTributação conta corrente.\n");
 				System.out.printf("O total gasto com operações foi de R$%.2f",
@@ -74,35 +83,59 @@ public class MenuRelatorio {
 			selecaoRelatorio(conta, funcionario);
 			break;
 		case 2:
-			int total = 0;
-			imprimeLinhaHorizontal();
-			System.out.println("\nNúmero de contas da sua agencia.\n");
-			for (String cpf : Conta.mapaContas.keySet()) {
-				if (Conta.mapaContas.get(cpf).getAgencia().equals(conta.getAgencia())) {
-					System.out.println(Conta.mapaContas.get(cpf));
-					total++;
+			if (idFuncionario >= 1) {
+				int total = 0;
+				imprimeLinhaHorizontal();
+				System.out.println("\nNúmero de contas da sua agencia.\n");
+				for (String cpf : Conta.mapaContas.keySet()) {
+					if (Conta.mapaContas.get(cpf).getAgencia().equals(conta.getAgencia())) {
+						System.out.println(Conta.mapaContas.get(cpf));
+						total++;
+					}
 				}
+				System.out.println("Total de contas: " + total);
+				LeituraEscrita.relatorioContasPorAgencia(conta);
+				System.out.println("\nDigite 1 para continuar.");
+				enter = Principal.sc.nextInt();
+				limpar();
+			} else {
+				System.out.println("\nAcesso negado!");
 			}
-			System.out.println("Total de contas: " + total);
-			LeituraEscrita.relatorioContasPorAgencia(conta);
-			System.out.println("\nDigite 1 para continuar.");
-			enter = Principal.sc.nextInt();
 			selecaoRelatorio(conta, funcionario);
-			limpar();
 			break;
 		case 3:
-			for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
-				System.out.println(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes());
+			if (idFuncionario >= 2) {
+				imprimeLinhaHorizontal();
+				System.out.println("\nInformações de Nome, CPF e Agência de todos os clientes.\n");
+				for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
+					System.out.println(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes());
+				}
+				System.out.println("\nDigite 1 para continuar.");
+				enter = Principal.sc.nextInt();
+				LeituraEscrita.relatorioTotalClientes(conta, Funcionario.OrdenaFuncionarios);
+				limpar();
+			} else {
+				System.out.println("\nAcesso negado!");
 			}
-			System.out.println("\nDigite 1 para continuar.");
-			enter = Principal.sc.nextInt();
-			LeituraEscrita.relatorioTotalClientes(conta, Funcionario.OrdenaFuncionarios);
-			limpar();
 			selecaoRelatorio(conta, funcionario);
 			break;
 		case 4:
-			limpar();
-			Menu.menuPrincipal(funcionario, conta);
+			if (idFuncionario >= 2) {
+				imprimeLinhaHorizontal();
+				double totalBanco = 0;
+				System.out.println("\nValor total do capital armazenado no banco.\n");
+				for(String cpf : Conta.mapaContas.keySet()) {
+					totalBanco = totalBanco + ((Conta) conta).mapaContas.get(cpf).getSaldo();
+				}
+	
+				System.out.printf("Capital total armazenado no banco: R$ %.2f", totalBanco);
+				LeituraEscrita.relatorioTotalCapitalBanco(conta, totalBanco);
+				System.out.println("\nDigite 1 para continuar.");
+				enter = Principal.sc.nextInt();
+			} else {
+				System.out.println("\nAcesso negado!");
+			}
+			selecaoRelatorio(conta, funcionario);
 			break;
 		default:
 			System.out.println("Opção inválida!");

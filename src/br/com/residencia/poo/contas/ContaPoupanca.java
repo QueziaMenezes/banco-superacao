@@ -4,7 +4,6 @@ import br.com.residencia.poo.tributos.SeguroDeVida;
 
 public class ContaPoupanca extends Conta implements SeguroDeVida {
 	protected double rendimento;
-
 	protected double taxaRendimento = 0.03;
 	
 	public ContaPoupanca() {
@@ -56,11 +55,6 @@ public class ContaPoupanca extends Conta implements SeguroDeVida {
 		} else {
 			System.out.println("Valor insuficiente!");
 		}
-	}
-
-	@Override
-	public void verificarSaldo() {
-		System.out.printf("R$ %.2f%n", this.saldo);
 	}
 	
 	public double previsaoDeRendimento(double valor, int dias) {

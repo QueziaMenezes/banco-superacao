@@ -35,7 +35,7 @@ public class Menu {
 			System.out.println("4 - Consulta Saldo.");
 			System.out.println("5 - Relatório.");
 			System.out.println("6 - Contratar Seguro de Vida");
-			System.out.println("7 - Sair");
+			System.out.println("0 - Sair");
 			System.out.print("Digite a opção desejada: ");
 			int opcao = Principal.sc.nextInt();
 			Double inputValor;
@@ -126,7 +126,7 @@ public class Menu {
 				enter = Principal.sc.nextInt();
 				principal.limpar();
 				break;
-			case 7:
+			case 0:
 				principal.imprimeLinhaHorizontal();
 				principal.limpar();
 				principal.menuInterativo();

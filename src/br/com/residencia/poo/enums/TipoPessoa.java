@@ -2,11 +2,12 @@ package br.com.residencia.poo.enums;
 
 public enum TipoPessoa {
 
+	CLIENTE("Cliente", 0),
+	OPERADOR_CAIXA("OperadorCaixa", 0),
 	GERENTE("Gerente", 1), 
 	DIRETOR("Diretor", 2),
-	PRESIDENTE("Presidente", 3),
-	OPERADOR_CAIXA("OperadorCaixa", 4),
-	CLIENTE("Cliente", 5);
+	PRESIDENTE("Presidente", 3);
+	
 	
 	private final Integer idTipoPessoa;
 	private final String tipoPessoa;

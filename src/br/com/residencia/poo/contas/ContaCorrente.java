@@ -39,7 +39,7 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 	public Double getTotalTributado() {
 		return totalTributado;
 	}
-	
+
 	public double getApolice() {
 		return apolice;
 	}
@@ -101,11 +101,6 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 		} else {
 			System.out.println("\nValor insuficiente.");
 		}
-	}
-	
-	@Override
-	public void verificarSaldo() {
-		System.out.printf("R$ %.2f%n", this.saldo);
 	}
 	
 	@Override

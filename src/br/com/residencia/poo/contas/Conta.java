@@ -85,8 +85,6 @@ public void setTitular(String titular) {
 	public abstract void depositar(double valor);
 
 	public abstract void transferir(Conta destino, double valor);
-	
-	public abstract void verificarSaldo();
 
 	@Override
 	public String toString() {

@@ -19,9 +19,11 @@ import br.com.residencia.poo.pessoas.Diretor;
 import br.com.residencia.poo.pessoas.Funcionario;
 import br.com.residencia.poo.pessoas.Gerente;
 import br.com.residencia.poo.pessoas.OperadorCaixa;
+import br.com.residencia.poo.pessoas.Presidente;
 import br.com.residencia.poo.principal.Principal;
 import br.com.residencia.poo.tributos.SeguroDeVida;
 import br.com.residencia.poo.tributos.Tributo;
+import br.com.residencia.poo.usuarios.Cliente;
 
 public class LeituraEscrita {
 	
@@ -56,11 +58,17 @@ public class LeituraEscrita {
 					Funcionario.mapaFuncionarios.put(dados[2], diretor);
 					Funcionario.OrdenaFuncionarios.put(dados[1], diretor);
 				} else if (dados[0].equalsIgnoreCase(TipoPessoa.PRESIDENTE.getTipoPessoa())) {
+					Presidente presidente = new Presidente(dados[0], dados[1], dados[2], dados[3], Integer.parseInt(dados[4]),
+							Integer.parseInt(dados[5]), Double.parseDouble(dados[6]));
+					Funcionario.mapaFuncionarios.put(dados[2], presidente);
+					Funcionario.OrdenaFuncionarios.put(dados[1], presidente);
+				} else if (dados[0].equalsIgnoreCase(TipoPessoa.OPERADOR_CAIXA.getTipoPessoa())) {
 					OperadorCaixa operadorCaixa = new OperadorCaixa(dados[0], dados[1], dados[2], dados[3], Integer.parseInt(dados[4]),
 							Integer.parseInt(dados[5]), Double.parseDouble(dados[6]));
 					Funcionario.mapaFuncionarios.put(dados[2], operadorCaixa);
 					Funcionario.OrdenaFuncionarios.put(dados[1], operadorCaixa);
 				}
+				
 			} else {
 				break;
 			}
@@ -398,6 +406,28 @@ public class LeituraEscrita {
 		for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
 			buffWrite.append(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes() + "\n");
 		}
+		
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		Date date = new Date();
+		linha = "Operação realizada em: " + simpleDateFormat.format(date);
+		buffWrite.append(linha + "\n");
+		
+		linha = "############################ FIM ############################";
+		buffWrite.append(linha + "\n\n");
+		
+		buffWrite.close();
+	}
+	
+	public static void relatorioTotalCapitalBanco(Conta conta, double totalBanco) throws IOException {
+		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+		+ "_relatorioTotalCapitalBanco";
+		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+					   
+		String linha = "############### RELATORIO TOTAL DO CAPITAL ARMAZENADO NO BANCO ###############";
+		buffWrite.append(linha + "\n");
+		
+		linha = "Capital total armazenado no banco: R$ " + totalBanco;
+		buffWrite.append(linha + "\n");
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();
