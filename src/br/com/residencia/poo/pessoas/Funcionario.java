@@ -3,9 +3,9 @@ package br.com.residencia.poo.pessoas;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import br.com.residencia.poo.usuarios.Cliente;
+import br.com.residencia.poo.usuarios.Pessoa;
 
-public class Funcionario extends Cliente implements Comparable<Funcionario> {
+public class Funcionario extends Pessoa implements Comparable<Funcionario> {
 	
 	protected Integer agencia;
 	protected Integer numero;

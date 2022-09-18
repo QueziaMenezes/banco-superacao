@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Conta {
-	//protected String titular;
 	protected String tipoConta;
 	protected Integer agencia;
 	protected Integer numero;
@@ -14,7 +13,6 @@ public abstract class Conta {
 	public static Map<String, Conta> mapaContas = new HashMap<>();
 	
 	public Conta() {
-
 	}
 
 	public Conta(String tipoConta, Integer agencia, Integer numero, Double saldo, String cpf) {
@@ -24,14 +22,6 @@ public abstract class Conta {
 		this.saldo = saldo;
 		this.cpf = cpf;
 	}
-	
-/*	public String getTitular() {
-		return titular;
-	}
-
-public void setTitular(String titular) {
-		this.titular = titular;
-	}*/
 	
 	public String getTipoConta() {
 		return tipoConta;
@@ -61,10 +51,6 @@ public void setTitular(String titular) {
 		return saldo;
 	}
 
-	public void setSaldo(Double saldo) {
-		this.saldo = saldo;
-	}
-
 	public String getCpf() {
 		return cpf;
 	}
@@ -76,7 +62,6 @@ public void setTitular(String titular) {
 	public void imprimeLinhaHorizontal() {
 		System.out.println("\n==================================================");
 	}
-
 	
 	public abstract String getTipo();
 	

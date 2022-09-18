@@ -19,26 +19,20 @@ public class MenuRelatorio {
 	protected int operacao;
 	protected static int enter;
 	Principal principal = new Principal();
-	Menu menuPrincipal = new Menu();
+	MenuPrincipal menuPrincipal = new MenuPrincipal();
 
 	public static void menuRelatorio(Integer idFuncionario, Funcionario funcionario, Conta conta) throws IOException {
 		limpar();
 		imprimeLinhaHorizontal();
 		System.out.println("Digite o número correspondente a operação desejada.");
 		System.out.println("Escolha uma das opções: ");
-		if (conta.getTipoConta().equalsIgnoreCase(TipoConta.CONTA_CORRENTE.getTipoConta())) {
-			System.out.println("1 - Tributação conta corrente.");
-		} else {
-			System.out.println("1 - Simulação de rendimento.");
-		}
-		
 		if (idFuncionario >= 1) {
-			System.out.println("2 - Número de contas da sua agencia.");
+			System.out.println("1 - Número de contas da sua agencia.");
+			System.out.println("2 - Relatório individual de cliente.");
 			if (idFuncionario >= 2) {
 				System.out.println("3 - Informações de Nome, CPF e Agência de todos os clientes.");
-				if (idFuncionario >= 2) {
-					System.out.println("4 - Informações do valor total do capital armazenado no banco.");
-					
+				if (idFuncionario >= 3) {
+					System.out.println("4 - Informações do valor total do capital armazenado no banco.");	
 				}
 			}
 		}
@@ -50,39 +44,7 @@ public class MenuRelatorio {
 		int operacao = Principal.sc.nextInt();
 
 		switch (operacao) {
-		case 0:
-			limpar();
-			Menu.menuPrincipal(funcionario, conta);
-			break;
 		case 1:
-			if (conta.getTipoConta().equalsIgnoreCase(TipoConta.CONTA_CORRENTE.getTipoConta())) {
-				imprimeLinhaHorizontal();
-				System.out.println("\nTributação conta corrente.\n");
-				System.out.printf("O total gasto com operações foi de R$%.2f",
-						((ContaCorrente) conta).getTotalTributado());
-				System.out.printf("\nO valor cobrado para cada saque é de R$ %.2f", Tributo.SAQUE);
-				System.out.println("\nTotal de saques realizados: " + ((ContaCorrente) conta).getTotalSaques());
-				LeituraEscrita.relatorioTributacaoContaCorrente(conta);
-				System.out.println("\nDigite 1 para continuar.");
-				enter = Principal.sc.nextInt();
-			} else {
-				int inputDias;
-				double inputValor;
-				imprimeLinhaHorizontal();
-				System.out.println("\nSimulação de rendimento.\n");
-				System.out.println("Digite o valor para a simulação: ");
-				inputValor = Double.parseDouble(Principal.sc.next());
-				System.out.println("Digite o número de dias para a simulação: ");
-				inputDias = Principal.sc.nextInt();
-				double valorRendimento = ((ContaPoupanca) conta).previsaoDeRendimento(inputValor, inputDias);
-				LeituraEscrita.relatorioRendimentoPoupanca(conta, inputValor, inputDias, valorRendimento);
-				System.out.println("\nDigite 1 para continuar.");
-				enter = Principal.sc.nextInt();
-			}
-			limpar();
-			selecaoRelatorio(conta, funcionario);
-			break;
-		case 2:
 			if (idFuncionario >= 1) {
 				int total = 0;
 				imprimeLinhaHorizontal();
@@ -103,16 +65,41 @@ public class MenuRelatorio {
 			}
 			selecaoRelatorio(conta, funcionario);
 			break;
+		case 2:
+			if (idFuncionario >= 1) {
+				imprimeLinhaHorizontal();
+				System.out.println("\nIRelatório individual de cliente..\n");
+				System.out.println("\nClientes:");
+				for (String nome : Cliente.OrdenaCliente.keySet()) {
+					System.out.println((Cliente.OrdenaCliente.get(nome)).relatorioInformacoes());
+				}
+
+				LeituraEscrita.relatorioTotalClientes(conta, Funcionario.OrdenaFuncionarios, Cliente.OrdenaCliente);
+				System.out.println("\nDigite 1 para continuar.");
+				enter = Principal.sc.nextInt();
+				limpar();
+			} else {
+				System.out.println("\nAcesso negado!");
+			}
+			selecaoRelatorio(conta, funcionario);
+			break;
 		case 3:
 			if (idFuncionario >= 2) {
 				imprimeLinhaHorizontal();
 				System.out.println("\nInformações de Nome, CPF e Agência de todos os clientes.\n");
+				System.out.println("\nFuncionarios:");
 				for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
 					System.out.println(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes());
 				}
+				
+				System.out.println("\nClientes:");
+				for (String nome : Cliente.OrdenaCliente.keySet()) {
+					System.out.println((Cliente.OrdenaCliente.get(nome)).relatorioInformacoes());
+				}
+
+				LeituraEscrita.relatorioTotalClientes(conta, Funcionario.OrdenaFuncionarios, Cliente.OrdenaCliente);
 				System.out.println("\nDigite 1 para continuar.");
 				enter = Principal.sc.nextInt();
-				LeituraEscrita.relatorioTotalClientes(conta, Funcionario.OrdenaFuncionarios);
 				limpar();
 			} else {
 				System.out.println("\nAcesso negado!");
@@ -120,7 +107,7 @@ public class MenuRelatorio {
 			selecaoRelatorio(conta, funcionario);
 			break;
 		case 4:
-			if (idFuncionario >= 2) {
+			if (idFuncionario >= 3) {
 				imprimeLinhaHorizontal();
 				double totalBanco = 0;
 				System.out.println("\nValor total do capital armazenado no banco.\n");
@@ -136,6 +123,10 @@ public class MenuRelatorio {
 				System.out.println("\nAcesso negado!");
 			}
 			selecaoRelatorio(conta, funcionario);
+			break;
+		case 0:
+			limpar();
+			MenuPrincipal.menuPrincipal(funcionario, conta);
 			break;
 		default:
 			System.out.println("Opção inválida!");

@@ -21,12 +21,13 @@ public class ContaPoupanca extends Conta implements SeguroDeVida {
 	
 	@Override
 	public void sacar(double valor) {
-		if (valor < saldo && valor >= 0) {
-			this.saldo -= valor;
+		if (valor <= 0) {
+			System.out.println("Valor inválido!");
+		} else if (this.saldo > 0 && this.saldo >= valor) {
+			this.saldo = this.saldo - valor;
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor sacado: R$%.2f", valor, "\n");
-			System.out.printf("\nSaldo atual: R$%.2f", this.saldo, "\n");
 		} else {
 			System.out.println("\nValor insuficiente!");
 		}
@@ -35,7 +36,7 @@ public class ContaPoupanca extends Conta implements SeguroDeVida {
 	@Override
 	public void depositar(double valor) {
 		if (valor > 0) {
-			this.saldo += valor;
+			this.saldo = this.saldo + valor;
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor depositado: R$%.2f", valor, "\n");
@@ -46,9 +47,9 @@ public class ContaPoupanca extends Conta implements SeguroDeVida {
 	
 	@Override
 	public void transferir(Conta destino, double valor) {
-		if (this.saldo >= valor && valor >= 0) {
-			destino.saldo += valor;	
-			this.saldo -= valor;
+		if (this.saldo >= valor) {
+			destino.saldo = destino.saldo + valor;	
+			this.saldo = this.saldo - valor;
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor transferido: R$%.2f", valor, "\n");

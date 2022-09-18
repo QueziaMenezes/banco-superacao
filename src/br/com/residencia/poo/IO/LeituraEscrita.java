@@ -67,8 +67,11 @@ public class LeituraEscrita {
 							Integer.parseInt(dados[5]), Double.parseDouble(dados[6]));
 					Funcionario.mapaFuncionarios.put(dados[2], operadorCaixa);
 					Funcionario.OrdenaFuncionarios.put(dados[1], operadorCaixa);
+				} else if (dados[0].equalsIgnoreCase(TipoPessoa.CLIENTE.getTipoPessoa())) {
+					Cliente cliente = new Cliente(dados[0], dados[1], dados[2], dados[3]);
+					Cliente.mapaCliente.put(dados[2],cliente);
+					Cliente.OrdenaCliente.put(dados[1], cliente);
 				}
-				
 			} else {
 				break;
 			}
@@ -76,7 +79,7 @@ public class LeituraEscrita {
 		buffRead.close();
 	}
 
-	public static void comprovanteSaque(Conta conta, double valorSaque) throws IOException {
+	public static void comprovanteSaque(Conta conta, double valorSaque, String nome) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
 				+ "_transacoes";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
@@ -84,6 +87,9 @@ public class LeituraEscrita {
 		String linha = "############### SAQUE ###############";
 		buffWrite.append(linha + "\n");
 
+		linha = "Titular: " + nome;
+		buffWrite.append(linha + "\n");
+		
 		linha = "CPF: " + conta.getCpf();
 		buffWrite.append(linha + "\n");
 
@@ -108,7 +114,7 @@ public class LeituraEscrita {
 
 	}
 
-	public static void comprovanteDeposito(Conta conta, double valorDeposito) throws IOException {
+	public static void comprovanteDeposito(Conta conta, double valorDeposito, String nome) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
 				+ "_transacoes";
 
@@ -117,6 +123,9 @@ public class LeituraEscrita {
 		String linha = "############### DEPÓSITO ###############";
 		buffWrite.append(linha + "\n");
 
+		linha = "Titular: " + nome;
+		buffWrite.append(linha + "\n");
+		
 		linha = "CPF: " + conta.getCpf();
 		buffWrite.append(linha + "\n");
 
@@ -141,7 +150,7 @@ public class LeituraEscrita {
 
 	}
 
-	public static void comprovanteTransferencia(Conta conta, Funcionario funcionario, double valorTransferencia, Conta destino, Funcionario funcionarioDestino)
+	public static void comprovanteTransferencia(Conta conta, String nome, double valorTransferencia, Conta destino)
 			throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
 				+ "_transacoes";
@@ -154,7 +163,7 @@ public class LeituraEscrita {
 		linha = "############### DADOS DO REMETENTE ###############";
 		buffWrite.append(linha + "\n");
 		
-		linha = "Titular: " + funcionario.getNome();
+		linha = "Titular: " + nome;
 		buffWrite.append(linha + "\n");
 
 		linha = "CPF: " + conta.getCpf();
@@ -169,9 +178,6 @@ public class LeituraEscrita {
 		linha = "############### DADOS DO DESTINATÁRIO ###############";
 		buffWrite.append(linha + "\n");
 
-		linha = "Titular: " + funcionarioDestino.getNome();
-		buffWrite.append(linha + "\n");
-		
 		linha = "CPF: " + destino.getCpf();
 		buffWrite.append(linha + "\n");
 
@@ -200,6 +206,9 @@ public class LeituraEscrita {
 		System.out.print("\nVoce quer enviar o comprovante para destinatario(1 - Sim/2 - Não): ");
 		int opcao = Principal.sc.nextInt();
 		if(opcao == 1) {
+			System.out.println("\nOperação realizada com sucesso!\n");
+			System.out.println("\n==================================================");
+			
 			nomeArquivo = destino.getCpf() + "_" + destino.getAgencia() + "_" + destino.getNumero()
 					+ "_transacoes";
 	
@@ -211,7 +220,7 @@ public class LeituraEscrita {
 			linha = "###############  DADOS DO REMETENTE ############### ";
 			buffWrite.append(linha + "\n");
 			
-			linha = "Titular: " + funcionario.getNome();
+			linha = "Titular: " + nome;
 			buffWrite.append(linha + "\n");
 	
 			linha = "CPF: " + conta.getCpf();
@@ -226,9 +235,6 @@ public class LeituraEscrita {
 			linha = "############### DADOS DO DESTINATÁRIO ###############";
 			buffWrite.append(linha + "\n");
 	
-			linha = "Titular: " + funcionarioDestino.getNome();
-			buffWrite.append(linha + "\n");
-			
 			linha = "CPF: " + destino.getCpf();
 			buffWrite.append(linha + "\n");
 	
@@ -278,17 +284,20 @@ public class LeituraEscrita {
 		linha = "Taxa para deposito = R$ " + df.format(Tributo.DEPOSITO);
 		buffWrite.append(linha + "\n");
 		
-		linha = "Total de saques transferidos = " + ((ContaCorrente) conta).getTotalTransferencias();
+		linha = "Total de deposito realizados = " + ((ContaCorrente) conta).getTotalDepositos();
 		buffWrite.append(linha + "\n\n");
 
 		linha = "Taxa para transferencia = R$ " + df.format(Tributo.TRANSFERENCIA);
 		buffWrite.append(linha + "\n");
 		
-		linha = "Total de saques seguro de vida = " + ((ContaCorrente) conta).getTotalSeguroDeVida();
+		linha = "Total de transferidos realizados = " + ((ContaCorrente) conta).getTotalTransferencias();
 		buffWrite.append(linha + "\n\n");
-
+	
 		linha = "Taxa para o seguro de vida = R$ " + df.format(SeguroDeVida.SEGURODEVIDA);
 		buffWrite.append(linha + "\n");
+		
+		linha = "Total de seguros de vida realizados = " + ((ContaCorrente) conta).getTotalSeguroDeVida();
+		buffWrite.append(linha + "\n\n");
 
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		Date date = new Date();
@@ -335,7 +344,7 @@ public class LeituraEscrita {
 
 	public static void relatorioRendimentoPoupanca(Conta conta, double inputValor, int inputDias, double valorRendimento) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
-		+ "_rendimentoPoupanca";
+		+ "_relatorio";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 					   
 		String linha = "############### RELATORIO RENDIMENTO POUPANCA ###############";
@@ -366,7 +375,7 @@ public class LeituraEscrita {
 
 	public static void relatorioContasPorAgencia(Conta conta) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
-		+ "_relatorioContasPorAgencia";
+		+ "_relatorio";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 					   
 		String linha = "############### RELATORIO CONTAS POR AGENCIA ###############";
@@ -395,16 +404,27 @@ public class LeituraEscrita {
 		
 	}
 
-	public static void relatorioTotalClientes(Conta conta, TreeMap<String, Funcionario> ordenaFuncionarios) throws IOException {
+	public static void relatorioTotalClientes(Conta conta, TreeMap<String, Funcionario> ordenaFuncionarios, TreeMap<String, Cliente> ordenaClientes) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
-		+ "_relatorioTotalClientes";
+		+ "_relatorio";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 					   
 		String linha = "############### RELATORIO TOTAL CLIENTES ###############";
 		buffWrite.append(linha + "\n");
 		
+		linha = "Funcionarios:";
+		buffWrite.append(linha + "\n");
 		for (String nome : Funcionario.OrdenaFuncionarios.keySet()) {
 			buffWrite.append(((Funcionario) Funcionario.OrdenaFuncionarios.get(nome)).relatorioInformacoes() + "\n");
+		}
+		
+		linha = "#############################################################";
+		buffWrite.append(linha + "\n");
+		
+		linha =  "Clientes:";
+		buffWrite.append(linha + "\n");
+		for (String nome : Cliente.OrdenaCliente.keySet()) {
+			buffWrite.append((Cliente.OrdenaCliente.get(nome)).relatorioInformacoes() + "\n");;
 		}
 		
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
@@ -420,7 +440,7 @@ public class LeituraEscrita {
 	
 	public static void relatorioTotalCapitalBanco(Conta conta, double totalBanco) throws IOException {
 		String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
-		+ "_relatorioTotalCapitalBanco";
+		+ "_relatorio";
 		BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
 					   
 		String linha = "############### RELATORIO TOTAL DO CAPITAL ARMAZENADO NO BANCO ###############";
@@ -439,4 +459,56 @@ public class LeituraEscrita {
 		
 		buffWrite.close();
 	}
+
+public static void relatorioSeguroDeVida(Conta conta) throws IOException {
+	String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+			+ "_tributacoes";
+
+	BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+				   
+	String linha = "############### RELATORIO SEGURO DE VIDA ###############";
+	buffWrite.append(linha + "\n\n");
+	
+	DecimalFormat df = new DecimalFormat("0.00");
+	
+	linha = "Total de saques seguro de vida = " + ((ContaCorrente) conta).getTotalSeguroDeVida();
+	buffWrite.append(linha + "\n\n");
+
+	linha = "Taxa para o seguro de vida = R$ " + df.format(SeguroDeVida.SEGURODEVIDA);
+	buffWrite.append(linha + "\n");
+
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	Date date = new Date();
+	linha = "Operação realizada em: " + simpleDateFormat.format(date);
+	buffWrite.append(linha + "\n");
+
+	linha = "############################## FIM ################################";
+	buffWrite.append(linha + "\n\n");
+
+	buffWrite.close();
+	}
+
+public static void relatorioClientes(Conta conta, TreeMap<String, Cliente> ordenaClientes) throws IOException {
+	String nomeArquivo = conta.getCpf() + "_" + conta.getAgencia() + "_" + conta.getNumero()
+	+ "_relatorio";
+	BufferedWriter buffWrite = new BufferedWriter(new FileWriter(PATH_BASICO + nomeArquivo + EXTENSAO, true));
+				   
+	String linha = "############### RELATORIO TOTAL CLIENTES ###############";
+	
+	linha =  "Clientes:";
+	buffWrite.append(linha + "\n");
+	for (String nome : Cliente.OrdenaCliente.keySet()) {
+		buffWrite.append((Cliente.OrdenaCliente.get(nome)).relatorioInformacoes() + "\n");;
+	}
+	
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	Date date = new Date();
+	linha = "Operação realizada em: " + simpleDateFormat.format(date);
+	buffWrite.append(linha + "\n");
+	
+	linha = "############################ FIM ############################";
+	buffWrite.append(linha + "\n\n");
+	
+	buffWrite.close();
 }
+}	

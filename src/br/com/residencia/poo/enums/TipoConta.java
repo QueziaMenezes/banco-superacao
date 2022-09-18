@@ -1,7 +1,6 @@
 package br.com.residencia.poo.enums;
 
 public enum TipoConta {
-
 	CONTA_CORRENTE("Corrente", 1),
 	CONTA_POUPANCA("Poupanca", 2);
 	

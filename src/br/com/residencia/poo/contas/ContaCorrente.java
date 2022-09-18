@@ -11,7 +11,6 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 	protected Double totalTributado = 0.0;
 	protected double apolice;
 	
-	
 	public ContaCorrente() {
 		super();
 	}
@@ -55,17 +54,21 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 
 	@Override
 	public void sacar(double valor) {
-		double valorTributado = tributarSaque(valor);
-		if (valorTributado < saldo && this.saldo - valorTributado >= 0) {
-			this.saldo -= valorTributado;
-			this.totalTributado += Tributo.SAQUE;
-			System.out.println("\nOperação realizada com sucesso!\n");
-			imprimeLinhaHorizontal();
-			System.out.printf("\nValor sacado: R$%.2f", valor, "\n");
-			System.out.printf("\nTaxa para saque: R$%.2f", Tributo.SAQUE, "\n");
-			++totalDepositos;
+		if (valor < 0) {
+			System.out.println("Valor inválido!");
 		} else {
-			System.out.println("Saldo insuficiente!");
+			double valorTributado = tributarSaque(valor);
+			if (this.saldo - valorTributado >= 0) {
+				this.saldo = this.saldo - valorTributado;
+				this.totalTributado = this.totalTributado + Tributo.SAQUE;
+				System.out.println("\nOperação realizada com sucesso!\n");
+				imprimeLinhaHorizontal();
+				System.out.printf("\nValor sacado: R$%.2f", valor, "\n");
+				System.out.printf("\nTaxa para saque: R$%.2f", Tributo.SAQUE, "\n");
+				++totalDepositos;
+			} else {
+				System.out.println("\nValor insuficiente!");
+			}
 		}
 	}
 	
@@ -73,15 +76,15 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 	public void depositar(double valor) {
 		double valorTributado = tributarDeposito(valor);
 		if (valorTributado > 0) {
-			this.saldo += valorTributado;
-			this.totalTributado += Tributo.DEPOSITO;
+			this.saldo = this.saldo + valorTributado;
+			this.totalTributado = this.totalTributado + Tributo.DEPOSITO;
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor depositado: R$%.2f", valor, "\n");
 			System.out.printf("\nTaxa para depositar: R$%.2f", Tributo.DEPOSITO, "\n");
 			++totalSaques;
 		} else {
-			System.out.println("Valor minimo!");
+			System.out.println("Valor inválido!");
 		}
 	}
 	
@@ -89,17 +92,17 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 	@Override
 	public void transferir(Conta destino, double valor) {
 		double valorTributado = tributarTransferencia(valor);
-		if (this.saldo >= valorTributado && (this.saldo - valorTributado >= 0)) {
-			destino.saldo += valorTributado;
-			this.saldo -= valorTributado;
-			this.totalTributado += Tributo.TRANSFERENCIA;
+		if (this.saldo >= valorTributado) {
+			destino.saldo = destino.saldo + valorTributado;
+			this.saldo = this.saldo - valorTributado;
+			this.totalTributado = this.totalTributado + Tributo.TRANSFERENCIA;
 			System.out.println("\nOperação realizada com sucesso!\n");
 			imprimeLinhaHorizontal();
 			System.out.printf("\nValor transferido: R$%.2f", valor, "\n");
 			System.out.printf("\nTaxa para transferência: R$%.2f", Tributo.TRANSFERENCIA, "\n");
 			++totalTransferencias;
 		} else {
-			System.out.println("\nValor insuficiente.");
+			System.out.println("\nValor insuficiente para transferir.");
 		}
 	}
 	
@@ -110,7 +113,7 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 	
 	@Override
 	public double tributarDeposito(double valor) {
-		return valor + Tributo.DEPOSITO;
+		return valor - Tributo.DEPOSITO;
 	}
 	
 	@Override
@@ -125,6 +128,8 @@ public class ContaCorrente extends Conta implements Tributo, SeguroDeVida  {
 			this.apolice = valor * SeguroDeVida.SEGURODEVIDA;
 			this.totalTributado += SeguroDeVida.SEGURODEVIDA;
 			this.saldo = this.saldo - this.apolice;
+			System.out.printf("\nValor assegurado: R$ %.2f%n", valor);
+			System.out.printf("\nValor da apólice: R$ %.2f%n", this.apolice);
 			++totalSeguroDeVida;
 		} else {
 			System.out.println("\nValor insuficiente!");
